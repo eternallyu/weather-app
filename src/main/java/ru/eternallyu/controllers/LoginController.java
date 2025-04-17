@@ -6,11 +6,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import ru.eternallyu.dto.LoginUserDto;
+import ru.eternallyu.exception.UserAuthorizationException;
 import ru.eternallyu.service.AuthenticationService;
 import ru.eternallyu.service.SessionService;
 import ru.eternallyu.service.UserService;
@@ -38,7 +36,7 @@ public class LoginController {
 
     @PostMapping("/login")
     public String loginPost(@ModelAttribute("user") LoginUserDto user, BindingResult result, Model model, HttpServletResponse response) {
-        if (!userService.existsByLogin(user.getLogin())) {
+        if (userService.getUserByLogin(user.getLogin()) == null) {
             result.rejectValue("login", "error.user", "User not found.");
             return "sign-in";
         }
@@ -48,7 +46,7 @@ public class LoginController {
             return "sign-in";
         }
 
-        UUID session = authenticationService.loginUser(user);
+        UUID session = authenticationService.login(user);
 
         Cookie cookie = cookieUtil.setCookie(session);
 
@@ -67,4 +65,5 @@ public class LoginController {
 
         return "redirect:/home";
     }
+
 }

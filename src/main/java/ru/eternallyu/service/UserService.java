@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import ru.eternallyu.dto.LoginUserDto;
 import ru.eternallyu.dto.RegistrationUserDto;
 import ru.eternallyu.dto.UserDto;
+import ru.eternallyu.exception.UserAuthorizationException;
 import ru.eternallyu.mapper.UserMapper;
 import ru.eternallyu.model.entity.User;
 import ru.eternallyu.repository.UserRepository;
@@ -25,6 +26,8 @@ public class UserService {
 
     public void createUser(RegistrationUserDto registrationUserDto) {
 
+        checkUniqueUserLogin(registrationUserDto.getLogin());
+
         User user = userMapper.mapUserDtoToUser(registrationUserDto);
 
         userRepository.save(user);
@@ -38,8 +41,10 @@ public class UserService {
         return userRepository.findById(id).orElse(null);
     }
 
-    public boolean existsByLogin(String login) {
-        return userRepository.existsByLogin(login);
+    public void checkUniqueUserLogin(String login) {
+        if (userRepository.existsByLogin(login)) {
+            throw new UserAuthorizationException("User already exists");
+        }
     }
 
     public boolean correctPassword(LoginUserDto user) {

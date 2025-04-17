@@ -2,6 +2,7 @@ package ru.eternallyu.util;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
@@ -20,18 +21,14 @@ import java.net.http.HttpResponse;
 import java.util.List;
 
 @Component
+@RequiredArgsConstructor
 public class OpenWeatherApiClient {
 
-    private static final HttpClient client = HttpClient.newHttpClient();
+    private final HttpClient client;
 
     private final Environment environment;
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
-
-    @Autowired
-    public OpenWeatherApiClient(Environment environment) {
-        this.environment = environment;
-    }
+    private final ObjectMapper objectMapper;
 
     public List<SearchLocationDto> getLocationsByName(String name) {
         String url = environment.getProperty("openweather.api.geo.url") +

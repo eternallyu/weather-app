@@ -3,10 +3,7 @@ package ru.eternallyu.configuration;
 import jakarta.persistence.EntityManagerFactory;
 import liquibase.integration.spring.SpringLiquibase;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -23,6 +20,7 @@ import java.util.Properties;
 
 @Configuration
 @PropertySource("classpath:/application.properties")
+@Profile("!test")
 @EnableJpaRepositories(basePackages = "ru.eternallyu.repository")
 @EnableTransactionManagement
 @ComponentScan(basePackages = "ru.eternallyu")

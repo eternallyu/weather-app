@@ -16,7 +16,7 @@ public class AuthenticationService {
     private final UserService userService;
 
     @Transactional
-    public UUID loginUser(LoginUserDto user) {
+    public UUID login(LoginUserDto user) {
 
         int userId = getUserIdFromUserDto(user);
 
