@@ -3,7 +3,6 @@ package ru.eternallyu.util;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import ru.eternallyu.dto.SearchLocationDto;
@@ -50,7 +49,7 @@ public class OpenWeatherApiClient {
             }
 
             if (response.statusCode() != 200) {
-                throw new WeatherApiException("API error.");
+                throw new WeatherApiException("Exception on Weather API end occurred for some unknown reason");
             }
 
             return objectMapper.readValue(

@@ -31,7 +31,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 })
 @Transactional
 @ActiveProfiles("test")
-public class AuthenticationIntegrationTest {
+public class AuthenticationServiceTest {
 
     @Autowired
     private AuthenticationService authenticationService;
