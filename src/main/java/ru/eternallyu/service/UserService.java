@@ -1,6 +1,7 @@
 package ru.eternallyu.service;
 
 import lombok.RequiredArgsConstructor;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 import ru.eternallyu.dto.LoginUserDto;
 import ru.eternallyu.dto.RegistrationUserDto;
@@ -30,6 +31,10 @@ public class UserService {
 
         User user = userMapper.mapUserDtoToUser(registrationUserDto);
 
+        String salt = BCrypt.gensalt(10);
+        String hashedPassword = BCrypt.hashpw(user.getPassword(), salt);
+        user.setPassword(hashedPassword);
+
         userRepository.save(user);
     }
 
@@ -48,6 +53,10 @@ public class UserService {
     }
 
     public boolean correctPassword(LoginUserDto user) {
-        return Objects.equals(user.getPassword(), userRepository.findByLogin(user.getLogin()).get().getPassword());
+        String rawPassword = user.getPassword();
+
+        String storedHash = Objects.requireNonNull(userRepository.findByLogin(user.getLogin()).orElse(null)).getPassword();
+
+        return BCrypt.checkpw(rawPassword, storedHash);
     }
 }
