@@ -8,7 +8,7 @@ import java.util.UUID;
 import static ru.eternallyu.util.SessionUtil.SESSION_DURATION_SECONDS;
 
 @Component
-public class CookieUtil {
+public class CookieUtils {
     public Cookie setCookie(UUID session) {
         Cookie cookie = new Cookie("session", session.toString());
         cookie.setPath("/");

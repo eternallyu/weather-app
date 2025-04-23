@@ -18,7 +18,7 @@ public class AuthenticationService {
     @Transactional
     public UUID login(LoginUserDto user) {
 
-        int userId = getUserIdFromUserDto(user);
+        Long userId = getUserIdFromUserDto(user);
 
         sessionService.deleteSessionByUserId(userId);
 
@@ -27,7 +27,7 @@ public class AuthenticationService {
         return sessionService.getSessionByUserId(userId).getId();
     }
 
-    private int getUserIdFromUserDto(LoginUserDto user) {
+    private Long getUserIdFromUserDto(LoginUserDto user) {
         return userService.getUserByLogin(user.getLogin()).getId();
     }
 }

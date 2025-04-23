@@ -1,14 +1,14 @@
 package ru.eternallyu.util;
 
 import org.springframework.stereotype.Component;
-import ru.eternallyu.exception.InvalidLocationException;
+import ru.eternallyu.exception.InvalidResourceException;
 
 @Component
 public class LocationNameValidator {
     public static void validateLocationName(String name) {
         if (emptyName(name) || notValidLength(name) || !name.matches("[a-zA-Za-яА-Я]+")
         ) {
-            throw new InvalidLocationException("Location name contains invalid characters.");
+            throw new InvalidResourceException("Location name contains invalid characters.");
         }
     }
 

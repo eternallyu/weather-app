@@ -10,9 +10,9 @@ import java.util.Optional;
 
 @Repository
 public interface LocationRepository extends JpaRepository<Location, Integer> {
-    List<Location> findByUserId(Integer userId);
+    List<Location> findByUserId(Long userId);
 
-    Optional<Location> findByIdAndUserId(Long id, Integer userId);
+    Optional<Location> findByIdAndUserId(Long id, Long userId);
 
-    Optional<Location> findByUserIdAndNameAndLatitudeAndLongitude(Integer userId, String name, BigDecimal latitude, BigDecimal longitude);
+    Optional<Location> findByUserIdAndNameAndLatitudeAndLongitude(Long userId, String name, BigDecimal latitude, BigDecimal longitude);
 }

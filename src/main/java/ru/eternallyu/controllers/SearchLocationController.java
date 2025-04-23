@@ -1,24 +1,27 @@
 package ru.eternallyu.controllers;
 
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import ru.eternallyu.dto.LocationDto;
 import ru.eternallyu.dto.SearchLocationDto;
 import ru.eternallyu.dto.UserDto;
-import ru.eternallyu.exception.InvalidLocationException;
-import ru.eternallyu.exception.UserAuthorizationException;
-import ru.eternallyu.exception.WeatherApiException;
 import ru.eternallyu.model.entity.Session;
 import ru.eternallyu.service.LocationService;
 import ru.eternallyu.service.SessionService;
 import ru.eternallyu.service.UserService;
 import ru.eternallyu.util.LocationNameValidator;
-import ru.eternallyu.util.SessionUtil;
 
 import java.math.BigDecimal;
 import java.util.List;
+
+import static ru.eternallyu.mapper.LocationMapper.buildLocationDto;
 
 @Controller
 @RequiredArgsConstructor
@@ -52,43 +55,11 @@ public class SearchLocationController {
 
         Session session = sessionService.checkUserSessionStatus(sessionFromCookie);
 
-        int userId = session.getUser().getId();
-
-        if (locationService.userHasLocation(userId, name, latitude, longitude)) {
-            throw new InvalidLocationException("User already has this location");
-        }
+        Long userId = session.getUser().getId();
+        locationService.isUserAlreadyHasLocation(userId, name, latitude, longitude);
 
         LocationDto locationDto = buildLocationDto(latitude, longitude, name, userId);
-
         locationService.createLocation(locationDto);
-
         return "redirect:/home";
-    }
-
-    private static LocationDto buildLocationDto(BigDecimal latitude, BigDecimal lon, String name, int userId) {
-        return LocationDto.builder()
-                .latitude(latitude)
-                .longitude(lon)
-                .name(name)
-                .userId(userId)
-                .build();
-    }
-
-    @ExceptionHandler(InvalidLocationException.class)
-    public String handleInvalidLocationException(InvalidLocationException exception, Model model) {
-        model.addAttribute("error", exception.getMessage());
-        return "error";
-    }
-
-    @ExceptionHandler(WeatherApiException.class)
-    public String handleWeatherApiException(WeatherApiException exception, Model model) {
-        model.addAttribute("error", exception.getMessage());
-        return "error";
-    }
-
-    @ExceptionHandler(UserAuthorizationException.class)
-    public String handleUserAuthorizationException(UserAuthorizationException exception, Model model) {
-        model.addAttribute("error", exception.getMessage());
-        return "error";
     }
 }

@@ -16,7 +16,6 @@ import java.util.UUID;
 public class Session {
 
     @Id
-    @Column(name = "id")
     private UUID id;
 
     @ManyToOne

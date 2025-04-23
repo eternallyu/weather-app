@@ -7,22 +7,20 @@ import ru.eternallyu.model.entity.Location;
 import ru.eternallyu.model.entity.User;
 import ru.eternallyu.service.UserService;
 
+import java.math.BigDecimal;
+
 @Component
 @RequiredArgsConstructor
 public class LocationMapper {
 
     private final UserService userService;
 
-    public LocationDto mapLocationToDto(Location location) {
-        return buildLocationDto(location);
-    }
-
-    private static LocationDto buildLocationDto(Location location) {
+    public static LocationDto buildLocationDto(BigDecimal latitude, BigDecimal longitude, String name, Long userId) {
         return LocationDto.builder()
-                .name(location.getName())
-                .userId(location.getUser().getId())
-                .latitude(location.getLatitude())
-                .longitude(location.getLongitude())
+                .name(name)
+                .userId(userId)
+                .longitude(longitude)
+                .latitude(latitude)
                 .build();
     }
 

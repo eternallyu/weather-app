@@ -12,12 +12,11 @@ import java.util.UUID;
 
 @Repository
 public interface SessionRepository extends JpaRepository<Session, UUID> {
-    @NonNull
     Optional<Session> findById(@NonNull UUID id);
 
-    Optional<Session> findByUserId(Integer userId);
+    Optional<Session> findByUserId(Long userId);
 
     @Modifying
     @Transactional
-    void deleteByUserId(Integer userId);
+    void deleteByUserId(Long userId);
 }

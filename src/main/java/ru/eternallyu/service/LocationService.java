@@ -1,12 +1,14 @@
 package ru.eternallyu.service;
 
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.eternallyu.dto.LocationDto;
 import ru.eternallyu.dto.SearchLocationDto;
 import ru.eternallyu.dto.weather.WeatherDto;
-import ru.eternallyu.exception.InvalidLocationException;
+import ru.eternallyu.exception.InvalidResourceException;
 import ru.eternallyu.mapper.LocationMapper;
 import ru.eternallyu.model.entity.Location;
 import ru.eternallyu.repository.LocationRepository;
@@ -25,11 +27,13 @@ public class LocationService {
     private final OpenWeatherApiClient openWeatherApiClient;
 
     private final LocationMapper locationMapper;
+    
+    private static final Logger logger = LoggerFactory.getLogger(LocationService.class);
 
     @Transactional
-    public void deleteLocationById(Long locationId, Integer userId) {
+    public void deleteLocationById(Long locationId, Long userId) {
         Location location = locationRepository.findByIdAndUserId(locationId, userId)
-                .orElseThrow(() -> new InvalidLocationException("Location not found or doesn't belong to user"));
+                .orElseThrow(() -> new InvalidResourceException("Location not found or doesn't belong to user."));
         locationRepository.delete(location);
     }
 
@@ -44,7 +48,7 @@ public class LocationService {
     }
 
     @Transactional
-    public List<WeatherDto> getWeatherForUserLocationsByUserId(int userId) {
+    public List<WeatherDto> getWeatherForUserLocationsByUserId(Long userId) {
         List<Location> locations = locationRepository.findByUserId(userId);
         List<WeatherDto> weatherDtoList = new ArrayList<>();
 
@@ -62,7 +66,10 @@ public class LocationService {
         return weatherDtoList;
     }
 
-    public boolean userHasLocation(int userId, String name, BigDecimal latitude, BigDecimal longitude) {
-        return locationRepository.findByUserIdAndNameAndLatitudeAndLongitude(userId, name, latitude, longitude).isPresent();
+    public void isUserAlreadyHasLocation(Long userId, String name, BigDecimal latitude, BigDecimal longitude) {
+        if (locationRepository.findByUserIdAndNameAndLatitudeAndLongitude(userId, name, latitude, longitude).isPresent()) {
+            logger.warn("User already has this location.");
+            throw new InvalidResourceException("User already has this location.");
+        };
     }
 }

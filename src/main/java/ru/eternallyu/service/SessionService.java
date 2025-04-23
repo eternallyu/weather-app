@@ -1,7 +1,10 @@
 package ru.eternallyu.service;
 
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import ru.eternallyu.exception.NotFoundException;
 import ru.eternallyu.exception.UserAuthorizationException;
 import ru.eternallyu.model.entity.Session;
 import ru.eternallyu.model.entity.User;
@@ -21,11 +24,13 @@ public class SessionService {
 
     private final UserService userService;
 
+    private static final Logger logger = LoggerFactory.getLogger(SessionService.class);
+
     public Session getSession(UUID uuid) {
         return sessionRepository.findById(uuid).orElse(null);
     }
 
-    public void createSession(Integer userId) {
+    public void createSession(Long userId) {
         UUID uuid = UUID.randomUUID();
         User user = userService.getUserById(userId);
         LocalDateTime sessionExpirationTime = sessionUtil.getSessionExpirationTime();
@@ -34,11 +39,11 @@ public class SessionService {
         sessionRepository.save(session);
     }
 
-    public Session getSessionByUserId(int userId) {
-        return sessionRepository.findByUserId(userId).orElse(null);
+    public Session getSessionByUserId(Long userId) {
+        return sessionRepository.findByUserId(userId).orElseThrow(() -> new NotFoundException("Session not found."));
     }
 
-    public void deleteSessionByUserId(int userId) {
+    public void deleteSessionByUserId(Long userId) {
         sessionRepository.deleteByUserId(userId);
     }
 
@@ -47,15 +52,10 @@ public class SessionService {
     }
 
     public Session checkUserSessionStatus(String sessionFromCookie) {
-        if (sessionFromCookie.isEmpty()) {
-            throw new UserAuthorizationException("User is not logged in");
-        }
 
         Session session = getSession(UUID.fromString(sessionFromCookie));
 
-        if (sessionUtil.isInvalidSession(session)) {
-            throw new UserAuthorizationException("User is not logged in");
-        }
+        sessionUtil.isInvalidSession(session);
 
         return session;
     }

@@ -2,6 +2,7 @@ package ru.eternallyu.util;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import ru.eternallyu.exception.InvalidResourceException;
 import ru.eternallyu.model.entity.Session;
 
 import java.time.LocalDateTime;
@@ -12,8 +13,10 @@ public class SessionUtil {
 
     public static final int SESSION_DURATION_SECONDS = 7200;
 
-    public boolean isInvalidSession(Session session) {
-        return session == null || session.getId() == null || isExpiredSession(session);
+    public void isInvalidSession(Session session) {
+        if (session == null || session.getId() == null || isExpiredSession(session)) {
+            throw new InvalidResourceException("Invalid session.");
+        }
     }
 
     private boolean isExpiredSession(Session session) {

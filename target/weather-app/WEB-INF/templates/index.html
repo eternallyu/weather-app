@@ -27,8 +27,11 @@
 
             <div th:if="${user != null}">
                 <span class="navbar-text me-3" th:text="${user.getLogin()}">User login</span>
-                <button class="btn btn-outline-danger" onclick="window.location.href='/logout'">Sign out</button>
+                <form th:action="@{/logout}" method="post" class="d-inline">
+                    <button type="submit" class="btn btn-outline-danger">Sign out</button>
+                </form>
             </div>
+
         </div>
     </div>
 </nav>

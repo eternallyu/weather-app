@@ -2,9 +2,9 @@ package ru.eternallyu.dto;
 
 import lombok.*;
 
-@Setter
 @Getter
 @Builder
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class LoginUserDto {

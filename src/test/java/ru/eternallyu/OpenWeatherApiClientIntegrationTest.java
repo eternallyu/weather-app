@@ -14,7 +14,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import ru.eternallyu.dto.SearchLocationDto;
-import ru.eternallyu.exception.LocationNotFoundException;
+import ru.eternallyu.exception.NotFoundException;
 import ru.eternallyu.util.OpenWeatherApiClient;
 
 import java.io.IOException;
@@ -79,7 +79,7 @@ public class OpenWeatherApiClientIntegrationTest {
 
         Assertions.assertThat(locations.size()).isGreaterThan(0);
 
-        SearchLocationDto location = locations.get(0);
+        SearchLocationDto location = locations.getFirst();
         Assertions.assertThat(location.getName()).isEqualTo(LOCATION_NAME);
     }
 
@@ -92,6 +92,6 @@ public class OpenWeatherApiClientIntegrationTest {
                 httpClient.send(any(HttpRequest.class), eq(HttpResponse.BodyHandlers.ofString()))
         ).thenReturn(response404);
 
-        org.junit.jupiter.api.Assertions.assertThrows(LocationNotFoundException.class, () -> apiClient.getLocationsByName(LOCATION_NAME));
+        org.junit.jupiter.api.Assertions.assertThrows(NotFoundException.class, () -> apiClient.getLocationsByName(LOCATION_NAME));
     }
 }

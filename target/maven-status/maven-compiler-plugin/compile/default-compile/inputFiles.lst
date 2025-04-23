@@ -1,3 +1,4 @@
+C:\Users\ZenQ\IdeaProjects\weather-app-project\src\main\java\ru\eternallyu\configuration\HttpClientConfig.java
 C:\Users\ZenQ\IdeaProjects\weather-app-project\src\main\java\ru\eternallyu\configuration\JpaConfig.java
 C:\Users\ZenQ\IdeaProjects\weather-app-project\src\main\java\ru\eternallyu\configuration\SpringConfig.java
 C:\Users\ZenQ\IdeaProjects\weather-app-project\src\main\java\ru\eternallyu\configuration\SpringMvcDispatcherServletInitializer.java
@@ -16,10 +17,9 @@ C:\Users\ZenQ\IdeaProjects\weather-app-project\src\main\java\ru\eternallyu\dto\w
 C:\Users\ZenQ\IdeaProjects\weather-app-project\src\main\java\ru\eternallyu\dto\weather\WeatherCondition.java
 C:\Users\ZenQ\IdeaProjects\weather-app-project\src\main\java\ru\eternallyu\dto\weather\WeatherDto.java
 C:\Users\ZenQ\IdeaProjects\weather-app-project\src\main\java\ru\eternallyu\exception\InvalidLocationException.java
-C:\Users\ZenQ\IdeaProjects\weather-app-project\src\main\java\ru\eternallyu\exception\LocationNotFoundException.java
+C:\Users\ZenQ\IdeaProjects\weather-app-project\src\main\java\ru\eternallyu\exception\NotFoundException.java
 C:\Users\ZenQ\IdeaProjects\weather-app-project\src\main\java\ru\eternallyu\exception\UserAuthorizationException.java
 C:\Users\ZenQ\IdeaProjects\weather-app-project\src\main\java\ru\eternallyu\exception\WeatherApiException.java
-C:\Users\ZenQ\IdeaProjects\weather-app-project\src\main\java\ru\eternallyu\exception\WeatherNotFoundException.java
 C:\Users\ZenQ\IdeaProjects\weather-app-project\src\main\java\ru\eternallyu\mapper\LocationMapper.java
 C:\Users\ZenQ\IdeaProjects\weather-app-project\src\main\java\ru\eternallyu\mapper\UserMapper.java
 C:\Users\ZenQ\IdeaProjects\weather-app-project\src\main\java\ru\eternallyu\model\entity\Location.java
@@ -32,6 +32,7 @@ C:\Users\ZenQ\IdeaProjects\weather-app-project\src\main\java\ru\eternallyu\servi
 C:\Users\ZenQ\IdeaProjects\weather-app-project\src\main\java\ru\eternallyu\service\LocationService.java
 C:\Users\ZenQ\IdeaProjects\weather-app-project\src\main\java\ru\eternallyu\service\SessionService.java
 C:\Users\ZenQ\IdeaProjects\weather-app-project\src\main\java\ru\eternallyu\service\UserService.java
+C:\Users\ZenQ\IdeaProjects\weather-app-project\src\main\java\ru\eternallyu\util\ControllerUtil.java
 C:\Users\ZenQ\IdeaProjects\weather-app-project\src\main\java\ru\eternallyu\util\CookieUtil.java
 C:\Users\ZenQ\IdeaProjects\weather-app-project\src\main\java\ru\eternallyu\util\LocationNameValidator.java
 C:\Users\ZenQ\IdeaProjects\weather-app-project\src\main\java\ru\eternallyu\util\OpenWeatherApiClient.java

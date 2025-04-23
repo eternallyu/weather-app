@@ -13,14 +13,11 @@ import lombok.Setter;
 public class User {
 
     @Id
-    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
-    @Column(name = "login")
     private String login;
 
-    @Column(name = "password")
     private String password;
 
     public User(String login, String password) {

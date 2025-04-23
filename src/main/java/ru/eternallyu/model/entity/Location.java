@@ -15,21 +15,17 @@ import java.math.BigDecimal;
 public class Location {
 
     @Id
-    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name")
     private String name;
 
     @ManyToOne
     @JoinColumn(name = "userid")
     private User user;
 
-    @Column(name = "latitude")
     private BigDecimal latitude;
 
-    @Column(name = "longitude")
     private BigDecimal longitude;
 
     public Location(String name, User user, BigDecimal latitude, BigDecimal longitude) {

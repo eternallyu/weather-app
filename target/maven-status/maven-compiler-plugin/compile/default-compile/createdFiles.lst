@@ -23,7 +23,6 @@ ru\eternallyu\controllers\SearchLocationController.class
 ru\eternallyu\dto\LocationDto.class
 ru\eternallyu\dto\RegistrationUserDto.class
 ru\eternallyu\model\entity\Session.class
-ru\eternallyu\exception\WeatherNotFoundException.class
 ru\eternallyu\dto\LoginUserDto.class
 ru\eternallyu\dto\weather\WeatherDto.class
 ru\eternallyu\util\OpenWeatherApiClient$1.class
@@ -34,11 +33,11 @@ ru\eternallyu\dto\SearchLocationDto.class
 ru\eternallyu\model\entity\User.class
 ru\eternallyu\dto\weather\Coordinates.class
 ru\eternallyu\mapper\LocationMapper.class
-ru\eternallyu\exception\LocationNotFoundException.class
 ru\eternallyu\util\OpenWeatherApiClient.class
 ru\eternallyu\repository\SessionRepository.class
 ru\eternallyu\service\UserService.class
 ru\eternallyu\mapper\UserMapper.class
+ru\eternallyu\exception\NotFoundException.class
 ru\eternallyu\util\LocationNameValidator.class
 ru\eternallyu\controllers\SignUpController.class
 ru\eternallyu\configuration\SpringConfig.class

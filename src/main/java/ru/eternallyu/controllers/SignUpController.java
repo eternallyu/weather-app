@@ -2,6 +2,8 @@ package ru.eternallyu.controllers;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,6 +21,8 @@ public class SignUpController {
 
     private final UserService userService;
 
+    private static final Logger logger = LoggerFactory.getLogger(SignUpController.class);
+
     @GetMapping("/registration")
     public String signUpGet(Model model) {
         model.addAttribute("user", new RegistrationUserDto());
@@ -30,25 +34,17 @@ public class SignUpController {
                              BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
+            logger.warn("Errors while signUp: {}", bindingResult.getAllErrors());
             return "sign-up";
         }
 
-//        userService.checkUniqueUserLogin(registrationUserDto.getLogin());
-//            bindingResult.rejectValue("login", "error.user", "User already exists.");
-//            return "sign-up";
-
-
         if (!registrationUserDto.isPasswordsMatch()) {
+            logger.info("Passwords do not match");
             bindingResult.rejectValue("repeatPassword", "error.user", "Passwords do not match.");
             return "sign-up";
         }
 
-        try {
-            userService.createUser(registrationUserDto);
-        } catch (UserAuthorizationException exception) {
-            bindingResult.rejectValue("login", "error.user", exception.getMessage());
-            return "sign-up";
-        }
+        userService.createUser(registrationUserDto);
 
         return "redirect:/login";
     }

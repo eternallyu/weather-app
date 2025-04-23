@@ -23,7 +23,6 @@ import java.util.Properties;
 @Profile("!test")
 @EnableJpaRepositories(basePackages = "ru.eternallyu.repository")
 @EnableTransactionManagement
-@ComponentScan(basePackages = "ru.eternallyu")
 public class JpaConfig {
 
     private final Environment environment;
