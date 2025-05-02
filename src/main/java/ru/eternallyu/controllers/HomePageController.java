@@ -1,8 +1,6 @@
 package ru.eternallyu.controllers;
 
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
@@ -13,8 +11,7 @@ import ru.eternallyu.model.entity.Session;
 import ru.eternallyu.service.LocationService;
 import ru.eternallyu.service.SessionService;
 import ru.eternallyu.util.ControllerUtils;
-import ru.eternallyu.util.OpenWeatherApiClient;
-import ru.eternallyu.util.SessionUtil;
+import ru.eternallyu.util.SessionUtils;
 
 import java.util.UUID;
 
@@ -28,7 +25,7 @@ public class HomePageController {
 
     private final LocationService locationService;
 
-    private final SessionUtil sessionUtil;
+    private final SessionUtils sessionUtils;
 
     @GetMapping("/home")
     public String homePage(@CookieValue(value = "session", defaultValue = "") String sessionFromCookie, Model model) {
@@ -40,7 +37,7 @@ public class HomePageController {
 
         Session session = sessionService.getSession(UUID.fromString(sessionFromCookie));
 
-        sessionUtil.isInvalidSession(session);
+        sessionUtils.isInvalidSession(session);
 
         controllerUtils.addNonEmptyAttributes(model, session);
         return "index";
@@ -53,7 +50,7 @@ public class HomePageController {
 
         Session session = sessionService.getSession(UUID.fromString(sessionFromCookie));
 
-        sessionUtil.isInvalidSession(session);
+        sessionUtils.isInvalidSession(session);
 
         Long userId = session.getUser().getId();
         locationService.deleteLocationById(locationId, userId);

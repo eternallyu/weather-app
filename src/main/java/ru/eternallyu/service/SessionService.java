@@ -5,11 +5,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import ru.eternallyu.exception.NotFoundException;
-import ru.eternallyu.exception.UserAuthorizationException;
 import ru.eternallyu.model.entity.Session;
 import ru.eternallyu.model.entity.User;
 import ru.eternallyu.repository.SessionRepository;
-import ru.eternallyu.util.SessionUtil;
+import ru.eternallyu.util.SessionUtils;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -20,7 +19,7 @@ public class SessionService {
 
     private final SessionRepository sessionRepository;
 
-    private final SessionUtil sessionUtil;
+    private final SessionUtils sessionUtils;
 
     private final UserService userService;
 
@@ -33,7 +32,7 @@ public class SessionService {
     public void createSession(Long userId) {
         UUID uuid = UUID.randomUUID();
         User user = userService.getUserById(userId);
-        LocalDateTime sessionExpirationTime = sessionUtil.getSessionExpirationTime();
+        LocalDateTime sessionExpirationTime = sessionUtils.getSessionExpirationTime();
 
         Session session = new Session(uuid, user, sessionExpirationTime);
         sessionRepository.save(session);
@@ -55,7 +54,7 @@ public class SessionService {
 
         Session session = getSession(UUID.fromString(sessionFromCookie));
 
-        sessionUtil.isInvalidSession(session);
+        sessionUtils.isInvalidSession(session);
 
         return session;
     }

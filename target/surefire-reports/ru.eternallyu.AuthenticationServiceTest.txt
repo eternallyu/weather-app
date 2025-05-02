@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: ru.eternallyu.AuthenticationServiceTest
+-------------------------------------------------------------------------------
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 5.654 s -- in ru.eternallyu.AuthenticationServiceTest

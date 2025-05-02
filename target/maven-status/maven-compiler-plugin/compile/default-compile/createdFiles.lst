@@ -4,7 +4,6 @@ ru\eternallyu\controllers\LoginController.class
 ru\eternallyu\service\LocationService.class
 ru\eternallyu\exception\WeatherApiException.class
 ru\eternallyu\dto\LoginUserDto$LoginUserDtoBuilder.class
-ru\eternallyu\util\SessionUtil.class
 ru\eternallyu\dto\weather\TemperatureInfo$TemperatureInfoBuilder.class
 ru\eternallyu\controllers\HomePageController.class
 ru\eternallyu\dto\UserDto$UserDtoBuilder.class
@@ -42,6 +41,4 @@ ru\eternallyu\util\LocationNameValidator.class
 ru\eternallyu\controllers\SignUpController.class
 ru\eternallyu\configuration\SpringConfig.class
 ru\eternallyu\dto\LocationDto$LocationDtoBuilder.class
-ru\eternallyu\exception\InvalidLocationException.class
-ru\eternallyu\util\CookieUtil.class
 ru\eternallyu\dto\weather\WeatherDto$WeatherDtoBuilder.class

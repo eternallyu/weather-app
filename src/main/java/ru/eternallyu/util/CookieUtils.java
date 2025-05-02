@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
-import static ru.eternallyu.util.SessionUtil.SESSION_DURATION_SECONDS;
+import static ru.eternallyu.util.SessionUtils.SESSION_DURATION_SECONDS;
 
 @Component
 public class CookieUtils {
