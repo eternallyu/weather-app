@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Results – Weather Viewer</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" th:href="@{/home}">
+            <img th:src="@{/src/main/resources/images/weather-app.png}" alt="" width="30" height="24" class="d-inline-block align-text-top">
+            Weather Tracker
+        </a>
+
+        <div class="d-flex align-items-center">
+
+            <div th:if="${user == null}">
+                <button class="btn btn-outline-primary me-2" onclick="window.location.href='/login'">Sign In</button>
+                <button class="btn btn-outline-secondary" onclick="window.location.href='/registration'">Sign Up</button>
+            </div>
+
+            <div th:if="${user != null}">
+                <span class="navbar-text me-3" th:text="${user.getLogin()}">User login</span>
+                <form th:action="@{/logout}" method="post" class="d-inline">
+                    <button type="submit" class="btn btn-outline-danger">Sign out</button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</nav>
+
+<section class="container mt-4">
+    <h2 class="mb-3">Search Results</h2>
+
+    <div th:if="${#lists.isEmpty(locations)}">
+        <div class="alert alert-warning">No locations found for your query.</div>
+    </div>
+
+    <div class="row" th:if="${!#lists.isEmpty(locations)}">
+        <div class="col-12 col-lg-3 col-md-6 mb-4" th:each="location : ${locations}">
+            <div class="card h-100">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title" th:text="${location.getName()}">City Name</h5>
+                    <p class="card-text mb-1">Latitude: <span th:text="${location.getLatitude()}">0.0</span></p>
+                    <p class="card-text mb-1">Longitude: <span th:text="${location.getLongitude()}">0.0</span></p>
+                    <p class="card-text mb-1">Country: <span th:text="${location.getCountry()}">Country</span></p>
+                    <p class="card-text mb-3">State: <span th:text="${location.getName()}">State</span></p>
+
+                    <form th:action="@{/add}" method="post">
+                        <input type="hidden" name="latitude" th:value="${location.getLatitude()}"/>
+                        <input type="hidden" name="longitude" th:value="${location.getLongitude()}"/>
+                        <input type="hidden" name="name" th:value="${location.getName()}"/>
+                        <button type="submit" class="btn btn-primary w-100">Add to My Locations</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="d-flex flex-wrap justify-content-between align-items-center py-3 mt-4 border-top">
+    <div class="px-4">
+        <span>© Weather Viewer – part of the <a href="https://zhukovsd.github.io/java-backend-learning-course/">Java Backend Course</a></span>
+    </div>
+</footer>
+
+</body>
+</html>
