@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import ru.eternallyu.exception.InvalidResourceException;
 import ru.eternallyu.exception.NotFoundException;
 import ru.eternallyu.model.entity.Session;
 import ru.eternallyu.model.entity.User;
@@ -26,7 +27,7 @@ public class SessionService {
     private static final Logger logger = LoggerFactory.getLogger(SessionService.class);
 
     public Session getSession(UUID uuid) {
-        return sessionRepository.findById(uuid).orElse(null);
+        return sessionRepository.findById(uuid).orElseThrow(() -> new InvalidResourceException("Session not found."));
     }
 
     public void createSession(Long userId) {

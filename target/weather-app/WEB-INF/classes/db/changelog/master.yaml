@@ -1,3 +1,0 @@
-databaseChangeLog:
-  - include:
-      file: db/changelog/eternallyu-23.04.2025.yaml

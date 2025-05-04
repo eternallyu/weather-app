@@ -16,10 +16,13 @@ import ru.eternallyu.model.entity.Session;
 import ru.eternallyu.service.LocationService;
 import ru.eternallyu.service.SessionService;
 import ru.eternallyu.service.UserService;
+import ru.eternallyu.util.ControllerUtils;
 import ru.eternallyu.util.LocationNameValidator;
+import ru.eternallyu.util.SessionUtils;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.UUID;
 
 import static ru.eternallyu.mapper.LocationMapper.buildLocationDto;
 
@@ -27,16 +30,22 @@ import static ru.eternallyu.mapper.LocationMapper.buildLocationDto;
 @RequiredArgsConstructor
 public class SearchLocationController {
 
+    private final ControllerUtils controllerUtils;
+
     private final LocationService locationService;
+
+    private final SessionUtils sessionUtils;
 
     private final UserService userService;
 
     private final SessionService sessionService;
 
     @GetMapping("/search")
-    public String searchLocation(@CookieValue(value = "session", defaultValue = "") String sessionFromCookie, @RequestParam("name") String name, Model model) {
+    public String searchLocation(@CookieValue(value = "session", required = false, defaultValue = "") String sessionFromCookie, @RequestParam("name") String name, Model model) {
 
         Session session = sessionService.checkUserSessionStatus(sessionFromCookie);
+        sessionUtils.isInvalidSession(session);
+
         UserDto userDto = userService.getUserDto(session.getUser().getLogin());
         LocationNameValidator.validateLocationName(name);
         List<SearchLocationDto> locations = locationService.getLocationsByName(name);

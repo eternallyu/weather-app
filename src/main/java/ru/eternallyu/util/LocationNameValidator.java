@@ -6,14 +6,14 @@ import ru.eternallyu.exception.InvalidResourceException;
 @Component
 public class LocationNameValidator {
     public static void validateLocationName(String name) {
-        if (emptyName(name) || notValidLength(name) || !name.matches("[a-zA-Za-яА-Я]+")
+        String trimmedName = name == null ? "" : name.trim();
+        if (trimmedName.isEmpty()
+            || trimmedName.contains("  ")
+            || notValidLength(trimmedName)
+            || !trimmedName.matches("[A-Za-zА-Яа-я ]+")
         ) {
             throw new InvalidResourceException("Location name contains invalid characters.");
         }
-    }
-
-    private static boolean emptyName(String name) {
-        return name == null || name.trim().isEmpty();
     }
 
     private static boolean notValidLength(String name) {

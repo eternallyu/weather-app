@@ -28,9 +28,9 @@ public class HomePageController {
     private final SessionUtils sessionUtils;
 
     @GetMapping("/home")
-    public String homePage(@CookieValue(value = "session", defaultValue = "") String sessionFromCookie, Model model) {
+    public String homePage(@CookieValue(value = "session", required = false, defaultValue = "") String sessionFromCookie, Model model) {
 
-        if (sessionFromCookie.isEmpty()) {
+        if (sessionFromCookie.isEmpty() || sessionFromCookie == null) {
             controllerUtils.addEmptyAttributes(model);
             return "index";
         }

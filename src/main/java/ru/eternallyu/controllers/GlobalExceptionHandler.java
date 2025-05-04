@@ -35,4 +35,9 @@ public class GlobalExceptionHandler {
         return "error";
     }
 
+    @ExceptionHandler(IllegalArgumentException.class)
+    public String handleIllegalArgumentException(IllegalArgumentException exception, Model model) {
+        model.addAttribute("error", "User is not logged in.");
+        return "error";
+    }
 }
